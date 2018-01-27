@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { Result } from './types';
+import { Result } from '../types';
 
-import UserSelect from './components/UserSelect';
-import RegionSelect from './components/RegionSelect';
+import UserSelect from './UserSelect';
+import RegionSelect from './RegionSelect';
 
 // export interface State {
 //   winner: number;

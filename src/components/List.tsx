@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Result } from './types';
+import { Result } from '../types';
 
 export interface Props {
   results: Result[];

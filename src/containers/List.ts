@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { ReduxState } from '../types';
-import List from '../List';
+import List from '../components/List';
 
 export function mapStateToProps(state: ReduxState) {
   return {
