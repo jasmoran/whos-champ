@@ -2,15 +2,10 @@ import * as React from 'react';
 import { Route, NavLink, HashRouter } from 'react-router-dom';
 import './App.css';
 
+import { Result } from './types';
+
 import Add from './Add';
 import List from './List';
-
-export class Result {
-  region: number;
-  winner: number;
-  date: string;
-  score: number;
-}
 
 export interface State {
   results: Result[];

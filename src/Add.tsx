@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Result } from './App';
+import { Result } from './types';
 
 import UserSelect from './components/UserSelect';
 import RegionSelect from './components/RegionSelect';
