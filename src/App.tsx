@@ -8,7 +8,7 @@ import leaderboardApp from './reducers';
 
 import { Result } from './types';
 
-import Add from './Add';
+import Add from './containers/Add';
 import List from './containers/List';
 
 export interface State {
@@ -33,10 +33,6 @@ class App extends React.Component<object, State> {
   }
 
   render() {
-    const renderAdd = (props: any) => {
-      return <Add newGame={this.newGame} />;
-    };
-
     return (
       <Provider store={this.store}>
         <HashRouter>
@@ -48,7 +44,7 @@ class App extends React.Component<object, State> {
             </ul>
             <div className="container">
               <Route exact={true} path="/" component={List} />
-              <Route path="/add" render={renderAdd} />
+              <Route path="/add" component={Add} />
             </div>
           </div>
         </HashRouter>
