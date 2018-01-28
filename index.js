@@ -28,6 +28,8 @@ app.get('/api/state', function (req, res) {
   res.send(data)
 })
 
+app.use(express.static('client'));
+
 app.listen(PORT, function () {
   console.log(`Listening on ${ PORT }`);
 })
