@@ -1,22 +1,16 @@
 import * as React from 'react';
+import { Region } from '../types';
 
 export interface Props {
+  regions: {[key: string]: Region};
   label: string;
   value: number;
   onChange: (e: any) => void;
 }
 
 class RegionSelect extends React.Component<Props, object> {
-  regions = [
-    { id: 0, name: 'Wellington' },
-    { id: 1, name: 'Auckland' },
-    { id: 2, name: 'Napier' },
-    { id: 3, name: 'London' },
-    { id: 4, name: 'World' }
-  ];
-
   render() {
-    const regions = this.regions.map((region: any) =>
+    const regions = Object.values(this.props.regions).map((region: Region) =>
       <option key={region.id} value={region.id}>{region.name}</option>
     );
 
