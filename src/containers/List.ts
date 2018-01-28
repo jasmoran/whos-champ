@@ -1,10 +1,15 @@
 import { connect } from 'react-redux';
-import { ReduxState } from '../types';
+import { ReduxState, Result } from '../types';
 import List from '../components/List';
 
 export function mapStateToProps(state: ReduxState) {
   return {
-    results: state.results
+    results: state.results.map((res: Result) => {
+      return {...res,
+        region: state.regions[res.region].name,
+        winner: state.users[res.winner].name
+      };
+    })
   };
 }
 
