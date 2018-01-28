@@ -1,6 +1,6 @@
-import { Region } from '../types';
+import { RegionSet } from '../types';
 
-const regions = (state: {[key: string]: Region} = {}, action: any) => {
+const regions = (state: RegionSet = {}, action: any) => {
   return state;
 };
 

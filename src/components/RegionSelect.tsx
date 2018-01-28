@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Region } from '../types';
+import { Region, RegionSet } from '../types';
 
 export interface Props {
-  regions: {[key: string]: Region};
+  regions: RegionSet;
   label: string;
   value: number;
   onChange: (e: any) => void;

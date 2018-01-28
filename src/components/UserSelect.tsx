@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { User } from '../types';
+import { User, UserSet } from '../types';
 
 export interface Props {
-  users: {[key: string]: User};
+  users: UserSet;
   label: string;
   value: number;
   onChange: (e: any) => void;

@@ -1,6 +1,6 @@
-import { User } from '../types';
+import { UserSet } from '../types';
 
-const users = (state: {[key: string]: User} = {}, action: any) => {
+const users = (state: UserSet = {}, action: any) => {
   return state;
 };
 
