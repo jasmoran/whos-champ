@@ -1,5 +1,6 @@
-var express = require('express')
-var app = express()
+const express = require('express')
+const PORT = process.env.PORT || 3001
+const app = express()
 
 const data = {
   regions: {
@@ -27,6 +28,6 @@ app.get('/api/state', function (req, res) {
   res.send(data)
 })
 
-app.listen(3001, function () {
-  console.log('Listening on port 3001')
+app.listen(PORT, function () {
+  console.log(`Listening on ${ PORT }`);
 })
