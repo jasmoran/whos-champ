@@ -1,22 +1,16 @@
 import * as React from 'react';
+import { User } from '../types';
 
 export interface Props {
+  users: {[key: string]: User};
   label: string;
   value: number;
   onChange: (e: any) => void;
 }
 
 class UserSelect extends React.Component<Props, object> {
-  users = [
-    { id: 0, name: 'Person 0' },
-    { id: 1, name: 'Person 1' },
-    { id: 2, name: 'Person 2' },
-    { id: 3, name: 'Person 3' },
-    { id: 4, name: 'Person 4' }
-  ];
-
   render() {
-    const users = this.users.map((user: any) =>
+    const users = Object.values(this.props.users).map((user: User) =>
       <option key={user.id} value={user.id}>{user.name}</option>
     );
 
