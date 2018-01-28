@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Route, NavLink, HashRouter } from 'react-router-dom';
+import { Route, NavLink, Router } from 'react-router-dom';
 import './App.css';
 
 import Add from './containers/Add';
 import List from './containers/List';
 
+import createHistory from 'history/createBrowserHistory';
+export const history = createHistory();
+
 class App extends React.Component {
   render() {
     return (
-      <HashRouter>
+      <Router history={history}>
         <div>
           <h1>Leaderboard</h1>
           <ul className="nav nav-pills">
@@ -20,7 +23,7 @@ class App extends React.Component {
             <Route path="/add" component={Add} />
           </div>
         </div>
-      </HashRouter>
+      </Router>
     );
   }
 }
