@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jasmoran/leaderboard-server/issues"
   },
-  "homepage": "https://github.com/jasmoran/leaderboard-server#readme"
+  "homepage": "https://github.com/jasmoran/leaderboard-server#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
