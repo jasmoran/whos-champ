@@ -1,10 +1,12 @@
 import { ADD_RESULT, ResultAction } from '../actions';
-import { Result } from '../types';
+import { ResultSet } from '../types';
 
-const results = (state: Result[] = [], action: ResultAction) => {
+const results = (state: ResultSet = {}, action: ResultAction) => {
   switch (action.type) {
     case ADD_RESULT:
-      return [...state, action.result];
+      return {...state,
+        [action.result._id]: action.result
+      };
     default:
       return state;
   }

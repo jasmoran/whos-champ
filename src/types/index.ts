@@ -16,8 +16,12 @@ export interface User {
   name: string;
 }
 
+export type ResultSet = {[key: string]: Result};
+export type RegionSet = {[key: string]: Region};
+export type UserSet = {[key: string]: User};
+
 export interface ReduxState {
-  results: Result[];
-  regions: {[key: string]: Region};
-  users: {[key: string]: User};
+  results: ResultSet;
+  regions: RegionSet;
+  users: UserSet;
 }

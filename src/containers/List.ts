@@ -4,7 +4,7 @@ import List from '../components/List';
 
 export function mapStateToProps(state: ReduxState) {
   return {
-    results: state.results.map((res: Result) => {
+    results: Object.values(state.results).map((res: Result) => {
       return {...res,
         region: state.regions[res.region].name,
         winner: state.users[res.winner].name
