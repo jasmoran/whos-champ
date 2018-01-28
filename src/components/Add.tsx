@@ -25,7 +25,9 @@ class Add extends React.Component<Props, any> {
 
   newGame = (e: any) => {
     e.preventDefault();
-    this.props.newGame(this.state as Result);
+    const _id = Math.random().toString(36).substr(2, 8);
+    const res = {...this.state, _id};
+    this.props.newGame(res as Result);
   }
 
   onChange = (prop: string) => {

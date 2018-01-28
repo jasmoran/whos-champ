@@ -11,7 +11,7 @@ export interface Props {
 class RegionSelect extends React.Component<Props, object> {
   render() {
     const regions = Object.values(this.props.regions).map((region: Region) =>
-      <option key={region.id} value={region.id}>{region.name}</option>
+      <option key={region._id} value={region._id}>{region.name}</option>
     );
 
     return (

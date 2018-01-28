@@ -11,7 +11,7 @@ export interface Props {
 class UserSelect extends React.Component<Props, object> {
   render() {
     const users = Object.values(this.props.users).map((user: User) =>
-      <option key={user.id} value={user.id}>{user.name}</option>
+      <option key={user._id} value={user._id}>{user.name}</option>
     );
 
     return (
