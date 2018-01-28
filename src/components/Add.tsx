@@ -5,12 +5,10 @@ import { Result } from '../types';
 import UserSelect from '../containers/UserSelect';
 import RegionSelect from '../containers/RegionSelect';
 
-// export interface State {
-//   winner: number;
-// }
-
 export interface Props {
   newGame: (res: Result) => void;
+  defaultRegion: string;
+  defaultWinner: string;
 }
 
 class Add extends React.Component<Props, any> {
@@ -18,8 +16,8 @@ class Add extends React.Component<Props, any> {
     super(props);
 
     this.state = {
-      region: 0,
-      winner: 0,
+      region: this.props.defaultRegion,
+      winner: this.props.defaultWinner,
       date: new Date().toISOString().substr(0, 10),
       score: 0
     };
