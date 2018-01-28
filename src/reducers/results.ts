@@ -4,12 +4,7 @@ import { Result } from '../types';
 const results = (state: Result[] = [], action: ResultAction) => {
   switch (action.type) {
     case ADD_RESULT:
-      return [...state, {
-        region: action.region,
-        winner: action.winner,
-        date: action.date,
-        score: action.score
-      }];
+      return [...state, action.result];
     default:
       return state;
   }

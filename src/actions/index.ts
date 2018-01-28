@@ -5,17 +5,14 @@ export type ADD_RESULT = typeof ADD_RESULT;
 
 export interface AddResult {
   type: ADD_RESULT;
-  region: number;
-  winner: number;
-  date: string;
-  score: number;
+  result: Result;
 }
 
 export type ResultAction = AddResult;
 
-export function addResult(result: Result) {
+export function addResult(result: Result): AddResult {
   return {
     type: ADD_RESULT,
-    ...result
+    result
   };
 }
