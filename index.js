@@ -24,6 +24,18 @@ const dbName = uri.split('/').pop();
 
     res.send(data);
   });
+
+  app.get('/api/regions', async function (req, res) {
+    res.send(await Regions.find().toArray());
+  });
+
+  app.get('/api/players', async function (req, res) {
+    res.send(await Users.find().toArray());
+  });
+
+  app.get('/api/results', async function (req, res) {
+    res.send(await Results.find().toArray());
+  });
 })();
 
 // Serve static React client
