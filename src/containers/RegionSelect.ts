@@ -4,7 +4,7 @@ import RegionSelect from '../components/RegionSelect';
 
 export function mapStateToProps(state: ReduxState, ownProps: any) {
   return {
-    regions: state.regions,
+    regions: state.regionData.regions,
     ...ownProps
   };
 }

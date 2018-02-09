@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { ReduxState } from '../types';
-import UserSelect from '../components/UserSelect';
+import PlayerSelect from '../components/PlayerSelect';
 
 export function mapStateToProps(state: ReduxState, ownProps: any) {
   return {
-    users: state.users,
+    players: state.playerData.players,
     ...ownProps
   };
 }
 
-export default connect(mapStateToProps)(UserSelect);
+export default connect(mapStateToProps)(PlayerSelect);

@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
-import results from './results';
-import regions from './regions';
-import users from './users';
+import resultData from './resultData';
+import regionData from './regionData';
+import playerData from './playerData';
+import loggedIn from './loggedIn';
 
 const leaderboardApp = combineReducers({
-  results,
-  regions,
-  users
+  resultData,
+  regionData,
+  playerData,
+  loggedIn
 });
 
 export default leaderboardApp;

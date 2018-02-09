@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { User, UserSet } from '../types';
+import { Player, PlayerSet } from '../types';
 
 export interface Props {
-  users: UserSet;
+  players: PlayerSet;
   label: string;
   value: number;
   onChange: (e: any) => void;
 }
 
-class UserSelect extends React.Component<Props, object> {
+class PlayerSelect extends React.Component<Props, object> {
   render() {
-    const users = Object.values(this.props.users).map((user: User) =>
-      <option key={user._id} value={user._id}>{user.name}</option>
+    const players = Object.values(this.props.players).map((player: Player) =>
+      <option key={player._id} value={player._id}>{player.name}</option>
     );
 
     return (
@@ -23,7 +23,7 @@ class UserSelect extends React.Component<Props, object> {
               value={this.props.value}
               onChange={this.props.onChange}
             >
-              {users}
+              {players}
             </select>
           </label>
         </div>
@@ -31,4 +31,4 @@ class UserSelect extends React.Component<Props, object> {
   }
 }
 
-export default UserSelect;
+export default PlayerSelect;

@@ -1,18 +1,22 @@
-import { Result } from '../types';
+export const SET_AUTH = 'SET_AUTH';
+export type SET_AUTH = typeof SET_AUTH;
 
-export const ADD_RESULT = 'ADD_RESULT';
-export type ADD_RESULT = typeof ADD_RESULT;
-
-export interface AddResult {
-  type: ADD_RESULT;
-  result: Result;
+export interface SetAuth {
+  type: SET_AUTH;
+  loggedIn: boolean;
 }
 
-export type ResultAction = AddResult;
-
-export function addResult(result: Result): AddResult {
+export function setAuth(loggedIn: boolean): SetAuth {
   return {
-    type: ADD_RESULT,
-    result
+    type: SET_AUTH,
+    loggedIn
   };
+}
+
+export function fetchAPI(endpoint: string) {
+  return fetch(`/api/${endpoint}`, { accept: 'application/json' } as RequestInit)
+  .then(
+    response => response.json(),
+    error => console.error(`An error occurred fetching ${endpoint}.`, error)
+  );
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Result } from '../types';
 
-import UserSelect from '../containers/UserSelect';
+import PlayerSelect from '../containers/PlayerSelect';
 import RegionSelect from '../containers/RegionSelect';
 
 export interface Props {
@@ -41,7 +41,7 @@ class Add extends React.Component<Props, any> {
       <form onSubmit={this.newGame}>
         <RegionSelect label="Region" value={this.state.region} onChange={this.onChange('region')} />
 
-        <UserSelect label="Winner" value={this.state.winner} onChange={this.onChange('winner')} />
+        <PlayerSelect label="Winner" value={this.state.winner} onChange={this.onChange('winner')} />
 
         <div className="form-group">
           <label htmlFor="score">Score</label>
