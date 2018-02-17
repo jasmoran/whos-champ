@@ -1,8 +1,9 @@
 import { WebAuth, Auth0Error, Auth0DecodedHash } from 'auth0-js';
-import { history } from '../App';
+import { History } from 'history';
 
 export default class Auth {
   setAuth: (t: boolean) => void;
+  history: History;
 
   auth0 = new WebAuth({
     domain: 'app86758601.auth0.com',
@@ -22,10 +23,10 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setAuth(true);
         this.setSession(authResult);
-        history.replace('/');
+        this.history.replace('/');
       } else if (err) {
-        history.replace('/');
-        console.log(err);
+        this.history.replace('/');
+        console.error(err);
       }
     });
   }
@@ -40,7 +41,7 @@ export default class Auth {
     }
 
     // navigate to the home route
-    history.replace('/');
+    this.history.replace('/');
   }
 
   logout = () => {
@@ -52,7 +53,7 @@ export default class Auth {
     this.setAuth(false);
 
     // navigate to the home route
-    history.replace('/');
+    this.history.replace('/');
   }
 
   isAuthenticated = () => {
@@ -67,8 +68,9 @@ export default class Auth {
     }
   }
 
-  constructor(setAuth: (t: boolean) => void) {
+  constructor(setAuth: (t: boolean) => void, history: History) {
     setAuth(this.isAuthenticated());
     this.setAuth = setAuth;
+    this.history = history;
   }
 }

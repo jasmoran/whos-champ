@@ -5,6 +5,10 @@ import List from '../components/List';
 export function mapStateToProps(state: ReduxState) {
   return {
     results: Object.values(state.resultData.results).map((res: Result) => {
+      if (!state.regionData.receivedAt || !state.playerData.receivedAt) {
+        return res;
+      }
+      
       return {...res,
         region: state.regionData.regions[res.region].name,
         winner: state.playerData.players[res.winner].name
