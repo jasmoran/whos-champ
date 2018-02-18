@@ -68,6 +68,10 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
     res.send(await Results.find().toArray());
   });
 
+  app.post('/api/results', function (req, res) {
+    Results.insert(req.body);
+  });
+
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));

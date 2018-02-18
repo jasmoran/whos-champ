@@ -10,6 +10,15 @@ export interface AddResult {
 }
 
 export function addResult(result: Result): AddResult {
+  fetch(`/api/results`, {
+    method: 'POST',
+    body: JSON.stringify(result),
+    headers: {
+      'Authorization': `Bearer ${localStorage.access_token}`,
+      'Content-Type': 'application/json'
+    }
+  } as RequestInit);
+
   return {
     type: ADD_RESULT,
     result
