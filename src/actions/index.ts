@@ -14,7 +14,10 @@ export function setAuth(loggedIn: boolean): SetAuth {
 }
 
 export function fetchAPI(endpoint: string) {
-  return fetch(`/api/${endpoint}`, { accept: 'application/json' } as RequestInit)
+  return fetch(`/api/${endpoint}`, { headers: {
+    'Authorization': `Bearer ${localStorage.access_token}`,
+    'Content-Type': 'application/json'
+  }} as RequestInit)
   .then(
     response => response.json(),
     error => console.error(`An error occurred fetching ${endpoint}.`, error)

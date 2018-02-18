@@ -8,8 +8,8 @@ export default class Auth {
   auth0 = new WebAuth({
     domain: 'app86758601.auth0.com',
     clientID: '0LzxQ5Ot1Urt82svjKvm98Co9VAgxwUP',
-    redirectUri: 'https://whos-champ.herokuapp.com/callback',
-    audience: 'https://app86758601.auth0.com/userinfo',
+    redirectUri: 'http://localhost:3000/callback',
+    audience: 'https://whos-champ.herokuapp.com/api',
     responseType: 'token id_token',
     scope: 'openid profile email'
   });
