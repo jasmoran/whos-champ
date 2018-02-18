@@ -67,12 +67,13 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
   app.get('/api/results', async function (req, res) {
     res.send(await Results.find().toArray());
   });
+
+  // All remaining requests return the React app, so it can handle routing.
+  app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+  });
 })();
 
-// All remaining requests return the React app, so it can handle routing.
-app.get('*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
-});
 
 app.listen(PORT, function () {
   console.log(`Listening on ${ PORT }`);
