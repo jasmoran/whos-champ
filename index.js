@@ -6,6 +6,33 @@ const mongo = require('mongodb');
 const uri = process.env.MONGODB_URI;
 const dbName = uri.split('/').pop();
 
+// enable the use of request body parsing middleware
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+// Create middleware for checking the JWT
+const jwksRsa = require('jwks-rsa');
+const jwt = require('express-jwt');
+const checkJwt = jwt({
+  // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://app86758601.auth0.com/.well-known/jwks.json'
+  }),
+
+  // Validate the audience and the issuer.
+  audience: 'https://whos-champ.herokuapp.com/api',
+  issuer: 'https://app86758601.auth0.com/',
+  algorithms: ['RS256']
+});
+
+app.use(checkJwt);
+
 (async function() {
   const client = await mongo.MongoClient.connect(uri);
   const db = client.db(dbName);
