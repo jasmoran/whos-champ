@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express')
 const PORT = process.env.PORT || 3001
 const app = express()
@@ -30,8 +32,10 @@ const checkJwt = jwt({
   issuer: 'https://app86758601.auth0.com/',
   algorithms: ['RS256']
 });
+app.use('/api', checkJwt);
 
-app.use(checkJwt);
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
 (async function() {
   const client = await mongo.MongoClient.connect(uri);
@@ -65,8 +69,10 @@ app.use(checkJwt);
   });
 })();
 
-// Serve static React client
-app.use(express.static('client'));
+// All remaining requests return the React app, so it can handle routing.
+app.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+});
 
 app.listen(PORT, function () {
   console.log(`Listening on ${ PORT }`);
