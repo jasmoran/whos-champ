@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Route, NavLink, Router } from 'react-router-dom';
+import { Nav, NavItem, Navbar } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import Auth from '../auth';
 
@@ -7,6 +9,7 @@ import Add from '../containers/Add';
 import List from '../containers/List';
 import Login from '../containers/Login';
 import Loading from './Loading';
+import Leaders from './Leaders';
 
 import createHistory from 'history/createBrowserHistory';
 export const history = createHistory();
@@ -28,14 +31,24 @@ class App extends React.Component<Props> {
     return (
       <Router history={history}>
         <div>
-          <h1>Who's Champ</h1>
-          <ul className="nav nav-pills">
-            <li><NavLink className="nav-link" exact={true} to="/">Home</NavLink></li>
-            <li><NavLink className="nav-link" to="/add">Add</NavLink></li>
-            <li><Login login={this.auth.login} logout={this.auth.logout} /></li>
-          </ul>
+          <Navbar fluid={true}>
+            <Navbar.Header>
+              <Navbar.Brand><NavLink to="/">Who's Champ</NavLink></Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav>
+                <LinkContainer exact={true} to="/"><NavItem>Home</NavItem></LinkContainer>
+                <LinkContainer to="/results"><NavItem>All Results</NavItem></LinkContainer>
+                <LinkContainer to="/add"><NavItem>Add</NavItem></LinkContainer>
+                <NavItem onClick={this.auth.logout}>Log Out</NavItem>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+          <Login login={this.auth.login} />
           <div className="container">
-            <Route exact={true} path="/" component={List} />
+            <Route exact={true} path="/" component={Leaders} />
+            <Route exact={true} path="/results" component={List} />
             <Route path="/add" component={Add} />
             <Route
               path="/callback"

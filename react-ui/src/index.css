@@ -3,3 +3,35 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.trophy {
+  height: 70px;
+  width: 70px;
+
+  /* Centre text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Display trophy */
+  background-image: url("/trophy-remix-by-monsterbraingames.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.trophy-text {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  font-weight: bold;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 5px;
+}
+
+.centre-vert {
+  display: flex;
+  align-items: center;
+}

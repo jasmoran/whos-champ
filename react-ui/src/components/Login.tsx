@@ -4,13 +4,12 @@ import { Modal, Button } from 'react-bootstrap';
 export interface Props {
   loggedIn: boolean;
   login: () => void;
-  logout: () => void;
 }
 
 export class Login extends React.Component<Props, any> {
   render() {
     if (this.props.loggedIn) {
-      return <Button className="nav-link" onClick={this.props.logout}>Log Out</Button>;
+      return null;
     }
 
     return (
