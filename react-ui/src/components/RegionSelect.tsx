@@ -1,32 +1,30 @@
 import * as React from 'react';
-import { Region, RegionSet } from '../types';
+import { Region } from '../types';
+import { FormGroup } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export interface Props {
-  regions: RegionSet;
+  regions: Region[];
   label: string;
-  value: number;
-  onChange: (e: any) => void;
+  value: Region[];
+  onChange: (t: Region[]) => void;
 }
 
 class RegionSelect extends React.Component<Props, object> {
   render() {
-    const regions = Object.values(this.props.regions).map((region: Region) =>
-      <option key={region._id} value={region._id}>{region.name}</option>
-    );
-
     return (
-        <div className="form-group">
-          <label>
-            {this.props.label}
-            <select
-              className="form-control"
-              value={this.props.value}
-              onChange={this.props.onChange}
-            >
-              {regions}
-            </select>
-          </label>
-        </div>
+        <FormGroup>
+          <label>{this.props.label}</label>
+          <Typeahead
+            multiple={true}
+            allowNew={true}
+            newSelectionPrefix="Add a new title: "
+            options={this.props.regions}
+            labelKey="name"
+            onChange={this.props.onChange}
+            selected={this.props.value}
+          />
+        </FormGroup>
     );
   }
 }

@@ -10,7 +10,7 @@ export function mapStateToProps(state: ReduxState) {
       }
       
       return {...res,
-        region: state.regionData.regions[res.region].name,
+        regions: res.regions.map(reg => state.regionData.regions[reg].name),
         winner: state.playerData.players[res.winner].name
       };
     })

@@ -10,9 +10,11 @@ export interface Props {
 class List extends React.Component<Props, object> {
   render() {
     const results = this.props.results.map((res: Result) => (
-      <ListGroupItem key={res._id}>
-        {res.winner} won the {res.region} title {date.describe(new Date(res.date))}
-      </ListGroupItem>
+      res.regions.map((reg: string) => (
+        <ListGroupItem key={res._id + reg}>
+          {res.winner} won the {reg} title {date.describe(new Date(res.date))}
+        </ListGroupItem>
+      ))
     ));
 
     return (

@@ -4,7 +4,7 @@ import PlayerSelect from '../components/PlayerSelect';
 
 export function mapStateToProps(state: ReduxState, ownProps: any) {
   return {
-    players: state.playerData.players,
+    players: Object.values(state.playerData.players),
     ...ownProps
   };
 }

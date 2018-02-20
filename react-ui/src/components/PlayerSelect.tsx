@@ -1,32 +1,29 @@
 import * as React from 'react';
-import { Player, PlayerSet } from '../types';
+import { Player } from '../types';
+import { FormGroup } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export interface Props {
-  players: PlayerSet;
+  players: Player[];
   label: string;
   value: number;
-  onChange: (e: any) => void;
+  onChange: (t: Player[]) => void;
 }
 
 class PlayerSelect extends React.Component<Props, object> {
   render() {
-    const players = Object.values(this.props.players).map((player: Player) =>
-      <option key={player._id} value={player._id}>{player.name}</option>
-    );
-
     return (
-        <div className="form-group">
-          <label>
-            {this.props.label}
-            <select
-              className="form-control"
-              value={this.props.value}
-              onChange={this.props.onChange}
-            >
-              {players}
-            </select>
-          </label>
-        </div>
+        <FormGroup>
+          <label>{this.props.label}</label>
+          <Typeahead
+            allowNew={true}
+            newSelectionPrefix="Add a new person: "
+            options={this.props.players}
+            labelKey="name"
+            clearButton={true}
+            onChange={this.props.onChange}
+          />
+        </FormGroup>
     );
   }
 }

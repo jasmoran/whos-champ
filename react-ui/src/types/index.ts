@@ -1,6 +1,6 @@
 export interface Result {
   _id: string;
-  region: string;
+  regions: string[];
   winner: string;
   date: string;
   score: number;
