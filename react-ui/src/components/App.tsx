@@ -39,8 +39,8 @@ class App extends React.Component<Props> {
             <Navbar.Collapse>
               <Nav>
                 <LinkContainer exact={true} to="/"><NavItem>Home</NavItem></LinkContainer>
+                <LinkContainer to="/add"><NavItem>Add Result</NavItem></LinkContainer>
                 <LinkContainer to="/results"><NavItem>All Results</NavItem></LinkContainer>
-                <LinkContainer to="/add"><NavItem>Add</NavItem></LinkContainer>
                 <NavItem onClick={this.auth.logout}>Log Out</NavItem>
               </Nav>
             </Navbar.Collapse>

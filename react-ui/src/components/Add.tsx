@@ -7,7 +7,9 @@ import RegionSelect from '../containers/RegionSelect';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup, Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { History } from 'history';
 
 export interface Props {
   newGame: (res: Result) => void;
@@ -33,8 +35,7 @@ class Add extends React.Component<Props, State> {
     };
   }
 
-  newGame = (e: any) => {
-    e.preventDefault();
+  newGame = (history: History) => {
     const id = Math.random().toString(36).substr(2, 8);
     if (this.state.winner.length === 1) {
       const res = {
@@ -45,6 +46,7 @@ class Add extends React.Component<Props, State> {
       };
 
       this.props.newGame(res);
+      history.push('/');
     }
   }
 
@@ -56,8 +58,12 @@ class Add extends React.Component<Props, State> {
     this.setState({ date: event.target.value })
 
   render() {
+    const Submit = withRouter(({ history }) => (
+      <Button onClick={this.newGame.bind(null, history)}>Add Game</Button>
+    ));
+
     return (
-      <form onSubmit={this.newGame}>
+      <form>
         <RegionSelect label="Region" value={this.state.regions} onChange={this.regionChange} />
 
         <PlayerSelect label="Winner" value={this.state.winner} onChange={this.winnerChange} />
@@ -72,7 +78,7 @@ class Add extends React.Component<Props, State> {
           <input className="form-control" type="date" value={this.state.date} onChange={this.dateChange} />
         </FormGroup>
 
-        <input type="submit" />
+        <Submit />
       </form>
     );
   }
