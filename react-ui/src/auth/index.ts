@@ -21,8 +21,8 @@ export default class Auth {
   handleAuthentication = () => {
     this.auth0.parseHash((err: Auth0Error | null, authResult: Auth0DecodedHash) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setAuth(true);
         this.setSession(authResult);
+        this.setAuth(true);
         this.history.replace('/');
       } else if (err) {
         this.history.replace('/');
