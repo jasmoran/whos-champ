@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ListGroupItem } from 'react-bootstrap';
 import { Result } from '../types';
 import Trophy from './Trophy';
 import CompactList from './CompactList';
@@ -8,15 +9,44 @@ export interface Props {
   results: Result[];
 }
 
-class RegionResults extends React.Component<Props, object> {
+export interface State {
+  expanded: boolean;
+  results: Result[];
+}
+
+class RegionResults extends React.Component<Props, State> {
+  reducedResults = this.props.results.slice(0, 3);
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      expanded: false,
+      results: this.reducedResults
+    };
+  }
+
+  expand = () => {
+    var results = this.props.results;
+    if (this.state.expanded) {
+      results = this.reducedResults;
+    }
+    this.setState({
+      expanded: !this.state.expanded,
+      results
+    });
+  }
+
   render() {
     return (
-      <div className="grid-2">
-        <Trophy text={this.props.region} />
-        <div className="centre-vert">
-          <CompactList results={this.props.results} />
+      <ListGroupItem onClick={this.expand}>
+        <div className="grid-2">
+          <Trophy text={this.props.region} />
+          <div className="centre-vert">
+            <CompactList results={this.state.results} />
+          </div>
         </div>
-      </div>
+      </ListGroupItem>
     );
   }
 }

@@ -2,8 +2,12 @@ import { connect } from 'react-redux';
 import { ReduxState, Result } from '../types';
 import Leaders from '../components/Leaders';
 
+function compareResults(a: Result, b: Result) {
+  return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+}
+
 export function mapStateToProps(state: ReduxState) {
-  var rByR = {};
+  var rByR: {[k: string]: Result[]} = {};
   Object.values(state.resultData.results)
         .forEach((res: Result) => {
           if (state.playerData.receivedAt) {
@@ -22,7 +26,8 @@ export function mapStateToProps(state: ReduxState) {
 
   const resultsByRegion = Object.entries(rByR)
                                 .map(([region, results]) => ({
-                                  region, results
+                                  region,
+                                  results: results.sort(compareResults)
                                 }));
 
   return { resultsByRegion };
