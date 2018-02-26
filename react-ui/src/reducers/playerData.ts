@@ -12,7 +12,7 @@ const playerData = (state: PlayerData = {
       return {...state, updating: true};
     case RECEIVE_PLAYERS:
       const players = {};
-      action.players.forEach(player => players[player._id] = player);
+      action.players.forEach(player => players[player.id] = player);
       return {
         players,
         receivedAt: action.receivedAt,

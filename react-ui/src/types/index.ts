@@ -1,5 +1,5 @@
 export interface Result {
-  _id: string;
+  id: string;
   regions: string[];
   winner: string;
   date: string;
@@ -7,12 +7,12 @@ export interface Result {
 }
 
 export interface Region {
-  _id: string;
+  id: string;
   name: string;
 }
 
 export interface Player {
-  _id: string;
+  id: string;
   name: string;
 }
 

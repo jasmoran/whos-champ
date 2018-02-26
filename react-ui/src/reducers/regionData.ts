@@ -12,7 +12,7 @@ const regionData = (state: RegionData = {
       return {...state, updating: true};
     case RECEIVE_REGIONS:
       const regions = {};
-      action.regions.forEach(region => regions[region._id] = region);
+      action.regions.forEach(region => regions[region.id] = region);
       return {
         regions,
         receivedAt: action.receivedAt,

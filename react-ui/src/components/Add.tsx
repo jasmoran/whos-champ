@@ -14,7 +14,7 @@ export interface Props {
 }
 
 export interface State {
-  _id?: string;
+  id?: string;
   regions: Region[];
   winner: Player[];
   date: string;
@@ -35,13 +35,13 @@ class Add extends React.Component<Props, State> {
 
   newGame = (e: any) => {
     e.preventDefault();
-    const _id = Math.random().toString(36).substr(2, 8);
+    const id = Math.random().toString(36).substr(2, 8);
     if (this.state.winner.length === 1) {
       const res = {
         ...this.state,
-        _id,
-        regions: this.state.regions.map(i => i._id),
-        winner: this.state.winner[0]._id
+        id,
+        regions: this.state.regions.map(i => i.id),
+        winner: this.state.winner[0].id
       };
 
       this.props.newGame(res);

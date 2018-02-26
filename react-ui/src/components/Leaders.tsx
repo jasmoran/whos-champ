@@ -14,7 +14,7 @@ class Leaders extends React.Component<Props, object> {
       date: '2018-02-26',
       score: 5
     });
-    res.forEach((v, ix) => v._id += ix);
+    res.forEach((v, ix) => v.id += ix);
 
     return (
       <div>

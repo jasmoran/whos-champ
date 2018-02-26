@@ -11,14 +11,14 @@ const resultData = (state: ResultData = {
     case ADD_RESULT:
       return {...state,
         results: {...state.results,
-          [action.result._id]: action.result
+          [action.result.id]: action.result
         }
       };
     case REQUEST_RESULTS:
       return {...state, updating: true};
     case RECEIVE_RESULTS:
       const results = {};
-      action.results.forEach(result => results[result._id] = result);
+      action.results.forEach(result => results[result.id] = result);
       return {
         results,
         receivedAt: action.receivedAt,
