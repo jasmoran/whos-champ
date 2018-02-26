@@ -8,8 +8,8 @@ import Auth from '../auth';
 import Add from '../containers/Add';
 import List from '../containers/List';
 import Login from '../containers/Login';
+import Leaders from '../containers/Leaders';
 import Loading from './Loading';
-import Leaders from './Leaders';
 
 import createHistory from 'history/createBrowserHistory';
 export const history = createHistory();
