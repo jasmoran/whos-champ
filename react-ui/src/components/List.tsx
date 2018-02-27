@@ -12,7 +12,7 @@ class List extends React.Component<Props, object> {
     const results = this.props.results.map((res: Result) => (
       res.regions.map((reg: string) => (
         <ListGroupItem key={res.id + reg}>
-          {res.winner} won the {reg} title {date.describe(res.date)}
+          {res.winner.name} won the {reg} title {date.describe(res.date)}
         </ListGroupItem>
       ))
     ));

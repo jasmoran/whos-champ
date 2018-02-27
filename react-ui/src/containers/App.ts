@@ -8,9 +8,8 @@ import App from '../components/App';
 
 export function mapDispatchToProps(dispatch: Dispatch<any>) {
   const updateData = () => {
-    dispatch(fetchResults());
-    dispatch(fetchRegions());
-    dispatch(fetchPlayers());
+    Promise.all([dispatch(fetchPlayers()), dispatch(fetchRegions())])
+           .then(() => dispatch(fetchResults()));
   };
 
   return {

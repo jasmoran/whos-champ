@@ -11,7 +11,7 @@ export function mapStateToProps(state: ReduxState) {
   Object.values(state.resultData.results)
         .forEach((res: Result) => {
           if (state.playerData.receivedAt) {
-            res = {...res, winner: state.playerData.players[res.winner].name };
+            res = {...res, winner: res.winner };
           }
 
           res.regions.forEach((reg: string) => {

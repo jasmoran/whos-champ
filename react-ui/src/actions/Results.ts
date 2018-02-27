@@ -1,4 +1,4 @@
-import { Result } from '../types';
+import { Result, ReduxState } from '../types';
 import { fetchAPI } from './';
 
 export const ADD_RESULT = 'ADD_RESULT';
@@ -12,7 +12,10 @@ export interface AddResult {
 export function addResult(result: Result): AddResult {
   fetch(`/api/results`, {
     method: 'POST',
-    body: JSON.stringify(result),
+    body: JSON.stringify({
+      ...result,
+      winner: result.winner.id
+    }),
     headers: {
       'Authorization': `Bearer ${localStorage.access_token}`,
       'Content-Type': 'application/json'
@@ -69,7 +72,7 @@ export function failedResults(): FailedResults {
 export type ResultAction = AddResult | RequestResults | ReceiveResults | FailedResults;
 
 export function fetchResults() {
-  return function (dispatch: (t: object) => void) {
+  return function (dispatch: (t: object) => void, getState: () => ReduxState) {
     // Mark results as fetching
     dispatch(requestResults());
 
@@ -81,16 +84,15 @@ export function fetchResults() {
         return;
       }
 
-      const results = json.map((res: Result) => ({
+      const results = json.map((res: any) => ({
         id: res.id,
         regions: res.regions,
-        winner: res.winner,
+        winner: getState().playerData.players[res.winner] || { id: res.winner, name: '' },
         date: new Date(res.date),
-        score: res.score
+        score: res.score 
       }));
 
       dispatch(receiveResults(results));
-    }
-    );
+    });
   };
 }

@@ -68,7 +68,7 @@ class Add extends React.Component<Props, State> {
       ...this.state,
       id,
       regions: this.state.regions.map(i => i.id),
-      winner: this.state.winner[0].id
+      winner: this.state.winner[0]
     };
     delete res.regionValid;
     delete res.winnerValid;

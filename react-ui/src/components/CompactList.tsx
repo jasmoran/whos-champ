@@ -10,7 +10,7 @@ function CompactList(props: Props) {
   const results = props.results.map((res) => (
     <tr key={res.id}>
       <td>{date.short(res.date)}</td>
-      <td style={{ paddingLeft: '10px' }}>{res.winner}</td>
+      <td style={{ paddingLeft: '10px' }}>{res.winner.name}</td>
     </tr>
   ));
 
