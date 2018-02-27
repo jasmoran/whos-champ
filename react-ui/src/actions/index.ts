@@ -23,3 +23,5 @@ export function fetchAPI(endpoint: string) {
     error => console.error(`An error occurred fetching ${endpoint}.`, error)
   );
 }
+
+export const generateID = () => Math.random().toString(36).substr(2, 8);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Region } from '../types';
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 
 export interface Props {
@@ -8,13 +8,14 @@ export interface Props {
   label: string;
   value: Region[];
   onChange: (t: Region[]) => void;
+  valid: 'error' | null;
 }
 
 class RegionSelect extends React.Component<Props, object> {
   render() {
     return (
-        <FormGroup>
-          <label>{this.props.label}</label>
+        <FormGroup validationState={this.props.valid}>
+          <ControlLabel>{this.props.label}</ControlLabel>
           <Typeahead
             multiple={true}
             allowNew={true}
@@ -24,6 +25,7 @@ class RegionSelect extends React.Component<Props, object> {
             onChange={this.props.onChange}
             selected={this.props.value}
           />
+          {this.props.valid && <HelpBlock>You must select at least one {this.props.label.toLowerCase()}</HelpBlock>}
         </FormGroup>
     );
   }

@@ -7,9 +7,10 @@ import RegionSelect from '../containers/RegionSelect';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import { FormGroup, Button } from 'react-bootstrap';
+import { FormGroup, Button, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { History } from 'history';
+import { generateID } from '../actions';
 
 export interface Props {
   newGame: (res: Result) => void;
@@ -21,40 +22,66 @@ export interface State {
   winner: Player[];
   date: string;
   score: number;
+  regionValid: 'error' | null;
+  winnerValid: 'error' | null;
 }
 
 class Add extends React.Component<Props, State> {
+  today = new Date().toISOString().substr(0, 10);
+
   constructor(props: Props) {
     super(props);
 
     this.state = {
       regions: new Array<Region>(),
       winner: new Array<Player>(),
-      date: new Date().toISOString().substr(0, 10),
-      score: 0
+      date: this.today,
+      score: 0,
+      regionValid: null,
+      winnerValid: null
     };
   }
 
-  newGame = (history: History) => {
-    const id = Math.random().toString(36).substr(2, 8);
-    if (this.state.winner.length === 1) {
-      const res = {
-        ...this.state,
-        id,
-        regions: this.state.regions.map(i => i.id),
-        winner: this.state.winner[0].id
-      };
-
-      this.props.newGame(res);
-      history.push('/');
-    }
+  validDate = () => {
+    const date = new Date(this.state.date);
+    if (isNaN(date.valueOf())) { return 'error'; }
+    return (date > new Date()) ? 'error' : null;
   }
 
-  regionChange = (value: Region[]) => this.setState({ regions: value });
-  winnerChange = (value: Player[]) => this.setState({ winner: value });
-  scoreChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+  newGame = (history: History) => {
+    var invalid = false;
+
+    if (this.validDate) { invalid = true; }
+
+    if (this.state.regions.length < 1) {
+      this.setState({ regionValid: 'error' });
+      invalid = true;
+    }
+
+    if (this.state.winner.length !== 1) {
+      this.setState({ winnerValid: 'error' });
+      invalid = true;
+    }
+
+    if (invalid) { return; }
+
+    const id = generateID();
+    const res = {
+      ...this.state,
+      id,
+      regions: this.state.regions.map(i => i.id),
+      winner: this.state.winner[0].id
+    };
+
+    this.props.newGame(res);
+    history.push('/');
+  }
+
+  regionChange = (value: Region[]) => this.setState({ regions: value, regionValid: null });
+  winnerChange = (value: Player[]) => this.setState({ winner: value, winnerValid: null });
+  scoreChange = (event: any) =>
     this.setState({ score: parseInt(event.target.value, 10) })
-  dateChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+  dateChange = (event: any) =>
     this.setState({ date: event.target.value })
 
   render() {
@@ -64,18 +91,38 @@ class Add extends React.Component<Props, State> {
 
     return (
       <form>
-        <RegionSelect label="Region" value={this.state.regions} onChange={this.regionChange} />
+        <RegionSelect
+          label="Region"
+          value={this.state.regions}
+          onChange={this.regionChange}
+          valid={this.state.regionValid}
+        />
 
-        <PlayerSelect label="Winner" value={this.state.winner} onChange={this.winnerChange} />
+        <PlayerSelect
+          label="Winner"
+          value={this.state.winner}
+          onChange={this.winnerChange}
+          valid={this.state.winnerValid}
+        />
 
-        <FormGroup>
-          <label htmlFor="score">Score</label>
-          <input className="form-control" type="number" value={this.state.score} onChange={this.scoreChange} />
+        <FormGroup style={{ display: 'none' }}>
+          <ControlLabel>Score</ControlLabel>
+          <FormControl
+            type="number"
+            value={this.state.score}
+            onChange={this.scoreChange}
+          />
         </FormGroup>
 
-        <FormGroup>
-          <label htmlFor="date">Date of Game</label>
-          <input className="form-control" type="date" value={this.state.date} onChange={this.dateChange} />
+        <FormGroup validationState={this.validDate()}>
+          <ControlLabel>Date of Game</ControlLabel>
+          <FormControl
+            type="date"
+            value={this.state.date}
+            onChange={this.dateChange}
+            max={this.today}
+          />
+          {this.validDate() && <HelpBlock>Date of game can't be in the future</HelpBlock>}
         </FormGroup>
 
         <Submit />

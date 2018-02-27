@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Player } from '../types';
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 
 export interface Props {
@@ -8,13 +8,14 @@ export interface Props {
   label: string;
   value: number;
   onChange: (t: Player[]) => void;
+  valid: 'error' | null;
 }
 
 class PlayerSelect extends React.Component<Props, object> {
   render() {
     return (
-        <FormGroup>
-          <label>{this.props.label}</label>
+        <FormGroup validationState={this.props.valid}>
+          <ControlLabel>{this.props.label}</ControlLabel>
           <Typeahead
             allowNew={true}
             newSelectionPrefix="Add a new person: "
@@ -23,6 +24,7 @@ class PlayerSelect extends React.Component<Props, object> {
             clearButton={true}
             onChange={this.props.onChange}
           />
+          {this.props.valid && <HelpBlock>You must select a {this.props.label.toLowerCase()}</HelpBlock>}
         </FormGroup>
     );
   }
