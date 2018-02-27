@@ -11,6 +11,7 @@ import { FormGroup, Button, FormControl, ControlLabel, HelpBlock } from 'react-b
 import { withRouter } from 'react-router-dom';
 import { History } from 'history';
 import { generateID } from '../actions';
+import date from '../date';
 
 export interface Props {
   newGame: (res: Result) => void;
@@ -20,38 +21,35 @@ export interface State {
   id?: string;
   regions: Region[];
   winner: Player[];
-  date: string;
+  date: Date;
   score: number;
   regionValid: 'error' | null;
   winnerValid: 'error' | null;
 }
 
 class Add extends React.Component<Props, State> {
-  today = new Date().toISOString().substr(0, 10);
-
   constructor(props: Props) {
     super(props);
 
     this.state = {
       regions: new Array<Region>(),
       winner: new Array<Player>(),
-      date: this.today,
+      date: new Date(),
       score: 0,
       regionValid: null,
-      winnerValid: null
+      winnerValid: null 
     };
   }
 
   validDate = () => {
-    const date = new Date(this.state.date);
-    if (isNaN(date.valueOf())) { return 'error'; }
-    return (date > new Date()) ? 'error' : null;
+    if (isNaN(this.state.date.valueOf())) { return 'error'; }
+    return (this.state.date > new Date()) ? 'error' : null;
   }
 
   newGame = (history: History) => {
     var invalid = false;
 
-    if (this.validDate) { invalid = true; }
+    if (this.validDate()) { invalid = true; }
 
     if (this.state.regions.length < 1) {
       this.setState({ regionValid: 'error' });
@@ -72,6 +70,8 @@ class Add extends React.Component<Props, State> {
       regions: this.state.regions.map(i => i.id),
       winner: this.state.winner[0].id
     };
+    delete res.regionValid;
+    delete res.winnerValid;
 
     this.props.newGame(res);
     history.push('/');
@@ -81,8 +81,12 @@ class Add extends React.Component<Props, State> {
   winnerChange = (value: Player[]) => this.setState({ winner: value, winnerValid: null });
   scoreChange = (event: any) =>
     this.setState({ score: parseInt(event.target.value, 10) })
-  dateChange = (event: any) =>
-    this.setState({ date: event.target.value })
+  dateChange = (event: any) => {
+    const d = new Date(event.target.value);
+    if (!isNaN(d.valueOf())) {
+      this.setState({ date: d });
+    }
+  }
 
   render() {
     const Submit = withRouter(({ history }) => (
@@ -118,9 +122,9 @@ class Add extends React.Component<Props, State> {
           <ControlLabel>Date of Game</ControlLabel>
           <FormControl
             type="date"
-            value={this.state.date}
+            value={date.toInput(this.state.date)}
             onChange={this.dateChange}
-            max={this.today}
+            max={date.toInput(new Date())}
           />
           {this.validDate() && <HelpBlock>Date of game can't be in the future</HelpBlock>}
         </FormGroup>

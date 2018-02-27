@@ -9,7 +9,7 @@ function createHandler(divisor: number, noun: string, restOfString: string) {
 }
 
 function short(date: Date) {
-  const full = date.toLocaleDateString('en-NZ');
+  const full = date.toLocaleDateString('en-AU');
   return full.substring(0, 6) + full.substring(8);
 }
 
@@ -41,5 +41,6 @@ export default {
     }
     throw new Error('exhausted all formatter options, none found'); // should never be reached
   },
-  short
+  short,
+  toInput: (date: Date) => date.toISOString().substr(0, 10)
 };

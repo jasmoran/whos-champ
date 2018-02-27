@@ -3,7 +3,7 @@ import { ReduxState, Result } from '../types';
 import Leaders from '../components/Leaders';
 
 function compareResults(a: Result, b: Result) {
-  return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+  return b.date.valueOf() - a.date.valueOf();
 }
 
 export function mapStateToProps(state: ReduxState) {

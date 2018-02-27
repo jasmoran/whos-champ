@@ -1,4 +1,4 @@
-import { ADD_RESULT, RECEIVE_RESULTS, REQUEST_RESULTS, ResultAction } from '../actions/Results';
+import { ADD_RESULT, RECEIVE_RESULTS, REQUEST_RESULTS, FAILED_RESULTS, ResultAction } from '../actions/Results';
 import { ResultData } from '../types';
 
 const resultData = (state: ResultData = {
@@ -24,6 +24,8 @@ const resultData = (state: ResultData = {
         receivedAt: action.receivedAt,
         updating: false
       };
+    case FAILED_RESULTS:
+      return {...state, updating: false};
     default:
       return state;
   }

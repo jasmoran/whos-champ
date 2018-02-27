@@ -47,15 +47,26 @@ export interface ReceiveResults {
   receivedAt: number;
 }
 
-export function receiveResults(json: Result[]): ReceiveResults {
+export function receiveResults(results: Result[]): ReceiveResults {
   return {
     type: RECEIVE_RESULTS,
-    results: json,
+    results: results,
     receivedAt: Date.now()
   };
 }
 
-export type ResultAction = AddResult | RequestResults | ReceiveResults;
+export const FAILED_RESULTS = 'FAILED_RESULTS';
+export type FAILED_RESULTS = typeof FAILED_RESULTS;
+
+export interface FailedResults {
+  type: FAILED_RESULTS;
+}
+
+export function failedResults(): FailedResults {
+  return { type: FAILED_RESULTS };
+}
+
+export type ResultAction = AddResult | RequestResults | ReceiveResults | FailedResults;
 
 export function fetchResults() {
   return function (dispatch: (t: object) => void) {
@@ -63,8 +74,23 @@ export function fetchResults() {
     dispatch(requestResults());
 
     return fetchAPI('results')
-    .then(json =>
-      dispatch(receiveResults(json))
+    .then(json => {
+      if (!(json instanceof Array)) {
+        console.error('Received malformed results from server');
+        dispatch(failedResults());
+        return;
+      }
+
+      const results = json.map((res: Result) => ({
+        id: res.id,
+        regions: res.regions,
+        winner: res.winner,
+        date: new Date(res.date),
+        score: res.score
+      }));
+
+      dispatch(receiveResults(results));
+    }
     );
   };
 }

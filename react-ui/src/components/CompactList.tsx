@@ -9,7 +9,7 @@ export interface Props {
 function CompactList(props: Props) {
   const results = props.results.map((res) => (
     <tr key={res.id}>
-      <td>{date.short(new Date(res.date))}</td>
+      <td>{date.short(res.date)}</td>
       <td style={{ paddingLeft: '10px' }}>{res.winner}</td>
     </tr>
   ));

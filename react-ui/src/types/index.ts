@@ -2,7 +2,7 @@ export interface Result {
   id: string;
   regions: string[];
   winner: string;
-  date: string;
+  date: Date;
   score: number;
 }
 
