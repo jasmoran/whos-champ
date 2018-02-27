@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { ReduxState, Result } from '../types';
+import { ReduxState, Result, Region } from '../types';
 import Leaders from '../components/Leaders';
 
 function compareResults(a: Result, b: Result) {
@@ -14,19 +14,15 @@ export function mapStateToProps(state: ReduxState) {
             res = {...res, winner: res.winner };
           }
 
-          res.regions.forEach((reg: string) => {
-            if (state.regionData.receivedAt) {
-              reg = state.regionData.regions[reg].name;
-            }
-
-            rByR[reg] = rByR[reg] || [];
-            rByR[reg].push(res);
+          res.regions.forEach((reg: Region) => {
+            rByR[reg.id] = rByR[reg.id] || [];
+            rByR[reg.id].push(res);
           });
         });
 
   const resultsByRegion = Object.entries(rByR)
                                 .map(([region, results]) => ({
-                                  region,
+                                  region: state.regionData.regions[region],
                                   results: results.sort(compareResults)
                                 }));
 

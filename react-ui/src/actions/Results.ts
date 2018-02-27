@@ -14,7 +14,8 @@ export function addResult(result: Result): AddResult {
     method: 'POST',
     body: JSON.stringify({
       ...result,
-      winner: result.winner.id
+      winner: result.winner.id,
+      regions: result.regions.map(r => r.id)
     }),
     headers: {
       'Authorization': `Bearer ${localStorage.access_token}`,
@@ -86,7 +87,7 @@ export function fetchResults() {
 
       const results = json.map((res: any) => ({
         id: res.id,
-        regions: res.regions,
+        regions: res.regions.map((reg: string) => getState().regionData.regions[reg] || { id: reg, name: '' }),
         winner: getState().playerData.players[res.winner] || { id: res.winner, name: '' },
         date: new Date(res.date),
         score: res.score 
