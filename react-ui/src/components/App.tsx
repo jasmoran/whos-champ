@@ -17,14 +17,26 @@ export const history = createHistory();
 export interface Props {
   setAuth: (t: boolean) => void;
   updateData: () => void;
+  updateLocation: () => void;
 }
 
 class App extends React.Component<Props> {
   auth: Auth;
+  locationInterval: number;
+  dataInterval: number;
 
   constructor(props: Props) {
     super(props);
     this.auth = new Auth(props.setAuth, history);
+  }
+
+  componentDidMount() {
+    this.props.updateLocation();
+    this.locationInterval = window.setInterval(this.props.updateLocation, 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.locationInterval);
   }
 
   render() {

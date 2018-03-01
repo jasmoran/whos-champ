@@ -1,6 +1,6 @@
 import { connect, Dispatch } from 'react-redux';
 // import { ReduxState } from '../types';
-import { setAuth } from '../actions';
+import { setAuth, setLocation } from '../actions';
 import { fetchResults } from '../actions/Results';
 import { fetchRegions } from '../actions/Regions';
 import { fetchPlayers } from '../actions/Players';
@@ -19,7 +19,14 @@ export function mapDispatchToProps(dispatch: Dispatch<any>) {
         updateData();
       }
     },
-    updateData
+    updateData,
+    updateLocation: () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos: Position) => {
+          dispatch(setLocation(pos.coords));
+        });
+      }
+    }
   };
 }
 

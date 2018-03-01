@@ -1,7 +1,13 @@
 import { connect, Dispatch } from 'react-redux';
-import { Result } from '../types';
+import { Result, ReduxState } from '../types';
 import { ResultAction, addResult } from '../actions/Results';
 import Add from '../components/Add';
+
+export function mapStateToProps(state: ReduxState) {
+  return {
+    location: state.location
+  };
+}
 
 export function mapDispatchToProps(dispatch: Dispatch<ResultAction>) {
   return {
@@ -11,4 +17,4 @@ export function mapDispatchToProps(dispatch: Dispatch<ResultAction>) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Add);
+export default connect(mapStateToProps, mapDispatchToProps)(Add);

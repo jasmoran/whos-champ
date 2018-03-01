@@ -39,6 +39,7 @@ export interface PlayerData extends FetchedData {
 
 export interface ReduxState {
   loggedIn: boolean;
+  location: Coordinates | null;
   resultData: ResultData;
   regionData: RegionData;
   playerData: PlayerData;

@@ -15,6 +15,7 @@ import date from '../date';
 
 export interface Props {
   newGame: (res: Result) => void;
+  location: Coordinates | null;
 }
 
 export interface State {
@@ -65,13 +66,13 @@ class Add extends React.Component<Props, State> {
 
     const id = generateID();
     const res = {
-      ...this.state,
       id,
       regions: this.state.regions,
-      winner: this.state.winner[0]
+      winner: this.state.winner[0],
+      date: this.state.date,
+      score: this.state.score,
+      location: this.props.location
     };
-    delete res.regionValid;
-    delete res.winnerValid;
 
     this.props.newGame(res);
     history.push('/');
