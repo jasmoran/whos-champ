@@ -11,7 +11,7 @@ import { FormGroup, Button, FormControl, ControlLabel, HelpBlock } from 'react-b
 import { withRouter } from 'react-router-dom';
 import { History } from 'history';
 import { generateID } from '../actions';
-import date from '../date';
+import DateUtil from '../DateUtil';
 
 export interface Props {
   newGame: (res: Result) => void;
@@ -83,7 +83,7 @@ class Add extends React.Component<Props, State> {
   scoreChange = (event: any) =>
     this.setState({ score: parseInt(event.target.value, 10) })
   dateChange = (event: any) => {
-    const d = new Date(event.target.value);
+    const d = DateUtil.fromInput(event.target.value);
     if (!isNaN(d.valueOf())) {
       this.setState({ date: d });
     }
@@ -123,9 +123,9 @@ class Add extends React.Component<Props, State> {
           <ControlLabel>Date of Game</ControlLabel>
           <FormControl
             type="date"
-            value={date.toInput(this.state.date)}
+            value={DateUtil.toInput(this.state.date)}
             onChange={this.dateChange}
-            max={date.toInput(new Date())}
+            max={DateUtil.toInput(new Date())}
           />
           {this.validDate() && <HelpBlock>Date of game can't be in the future</HelpBlock>}
         </FormGroup>

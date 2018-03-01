@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Result } from '../types';
-import date from '../date';
+import DateUtil from '../DateUtil';
 
 export interface Props {
   results: Result[];
@@ -9,7 +9,7 @@ export interface Props {
 function CompactList(props: Props) {
   const results = props.results.map((res) => (
     <tr key={res.id}>
-      <td>{date.short(res.date)}</td>
+      <td>{DateUtil.short(res.date)}</td>
       <td style={{ paddingLeft: '10px' }}>{res.winner.name}</td>
     </tr>
   ));
