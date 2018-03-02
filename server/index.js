@@ -49,6 +49,7 @@ var userCache = {};
   const Regions = db.collection('regions');
   const Players = db.collection('players');
   const Results = db.collection('results');
+  const Games = db.collection('games');
   const Users = db.collection('users');
 
   const exclude = { _id: 0, location: 0, createdAt: 0, creator: 0 };
@@ -106,7 +107,9 @@ var userCache = {};
   app.post('/api/players', create(Players, ({name}) => ({name})));
 
   app.get('/api/results', read(Results));
-  app.post('/api/results', create(Results, ({regions, winner, date, score}) => ({regions, winner, date, score})));
+  app.post('/api/results', create(Results, ({regions, winner, date, score, game}) => ({regions, winner, date, score, game})));
+
+  app.get('/api/games', read(Games));
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
