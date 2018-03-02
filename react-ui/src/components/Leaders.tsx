@@ -1,28 +1,30 @@
 import * as React from 'react';
 import { Panel, ListGroup } from 'react-bootstrap';
 import RegionResults from './RegionResults';
-import { Result, Region } from '../types';
+import { Result, Region, Game } from '../types';
 
 export interface Props {
-  resultsByRegion: { region: Region; results: Result[] }[];
+  resultsByRegionByGame: { game: Game, resultsByRegion: { region: Region; results: Result[] }[] }[];
 }
 
 class Leaders extends React.Component<Props, object> {
   render() {
-    const items = this.props.resultsByRegion.map(reg => (
-      <RegionResults key={reg.region.id} region={reg.region.name} results={reg.results} />
-    ));
-
-    return (
-      <div>
-        <Panel>
-          <Panel.Heading>Settlers of Catan</Panel.Heading>
+    const panels = this.props.resultsByRegionByGame.map(({game, resultsByRegion}) => {
+      const items = resultsByRegion.map(reg => (
+        <RegionResults key={reg.region.id} region={reg.region.name} results={reg.results} />
+      ));
+  
+      return (
+        <Panel key={game.id}>
+          <Panel.Heading>{game.name}</Panel.Heading>
           <ListGroup>
             {items}
           </ListGroup>
         </Panel>
-      </div>
-    );
+      );
+    });
+
+    return <div>{panels}</div>;
   }
 }
 

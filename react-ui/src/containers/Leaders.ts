@@ -7,26 +7,31 @@ function compareResults(a: Result, b: Result) {
 }
 
 export function mapStateToProps(state: ReduxState) {
-  var rByR: {[k: string]: Result[]} = {};
+  var rByRByG: {[g: string]: {[r: string]: Result[]}} = {};
   Object.values(state.resultData.results)
         .forEach((res: Result) => {
           if (state.playerData.receivedAt) {
             res = {...res, winner: res.winner };
           }
 
+          const gId = res.game.id;
           res.regions.forEach((reg: Region) => {
-            rByR[reg.id] = rByR[reg.id] || [];
-            rByR[reg.id].push(res);
+            rByRByG[gId] = rByRByG[gId] || {};
+            rByRByG[gId][reg.id] = rByRByG[gId][reg.id] || [];
+            rByRByG[gId][reg.id].push(res);
           });
         });
 
-  const resultsByRegion = Object.entries(rByR)
-                                .map(([region, results]) => ({
-                                  region: state.regionData.regions[region],
-                                  results: results.sort(compareResults)
-                                }));
+  const resultsByRegionByGame = Object.entries(rByRByG)
+                                      .map(([game, rByR]) => ({
+                                        game: state.gameData.games[game],
+                                        resultsByRegion: Object.entries(rByR).map(([region, results]) => ({
+                                          region: state.regionData.regions[region],
+                                          results: results.sort(compareResults)
+                                        }))
+                                      }));
 
-  return { resultsByRegion };
+  return { resultsByRegionByGame };
 }
 
 export default connect(mapStateToProps)(Leaders);
