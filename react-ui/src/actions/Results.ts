@@ -15,6 +15,7 @@ export function addResult(result: Result): AddResult {
     body: JSON.stringify({
       ...result,
       winner: result.winner.id,
+      game:   result.game.id,
       regions: result.regions.map(r => r.id)
     }),
     headers: {

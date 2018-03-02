@@ -4,6 +4,7 @@ import { Result, Region, Player, Game } from '../types';
 
 import PlayerSelect from '../containers/PlayerSelect';
 import RegionSelect from '../containers/RegionSelect';
+import GameSelect from '../containers/GameSelect';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
@@ -22,10 +23,12 @@ export interface State {
   id?: string;
   regions: Region[];
   winner: Player[];
+  game: Game[];
   date: Date;
   score: number;
   regionValid: 'error' | null;
   winnerValid: 'error' | null;
+  gameValid:   'error' | null;
 }
 
 class Add extends React.Component<Props, State> {
@@ -35,10 +38,12 @@ class Add extends React.Component<Props, State> {
     this.state = {
       regions: new Array<Region>(),
       winner: new Array<Player>(),
+      game: new Array<Game>(),
       date: new Date(),
       score: 0,
       regionValid: null,
-      winnerValid: null 
+      winnerValid: null,
+      gameValid:   null
     };
   }
 
@@ -62,6 +67,11 @@ class Add extends React.Component<Props, State> {
       invalid = true;
     }
 
+    if (this.state.game.length !== 1) {
+      this.setState({ winnerValid: 'error' });
+      invalid = true;
+    }
+
     if (invalid) { return; }
 
     const id = generateID();
@@ -72,7 +82,7 @@ class Add extends React.Component<Props, State> {
       date: this.state.date,
       score: this.state.score,
       location: this.props.location,
-      game: { id: 'settlers' } as Game
+      game: this.state.game[0]
     };
 
     this.props.newGame(res);
@@ -81,6 +91,7 @@ class Add extends React.Component<Props, State> {
 
   regionChange = (value: Region[]) => this.setState({ regions: value, regionValid: null });
   winnerChange = (value: Player[]) => this.setState({ winner: value, winnerValid: null });
+  gameChange   = (value: Game[])   => this.setState({ game: value, gameValid: null });
   scoreChange = (event: any) =>
     this.setState({ score: parseInt(event.target.value, 10) })
   dateChange = (event: any) => {
@@ -97,6 +108,13 @@ class Add extends React.Component<Props, State> {
 
     return (
       <form>
+        <GameSelect
+          label="Game"
+          value={this.state.game}
+          onChange={this.gameChange}
+          valid={this.state.gameValid}
+        />
+
         <RegionSelect
           label="Region"
           value={this.state.regions}
