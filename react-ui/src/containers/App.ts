@@ -4,11 +4,16 @@ import { setAuth, setLocation } from '../actions';
 import { fetchResults } from '../actions/Results';
 import { fetchRegions } from '../actions/Regions';
 import { fetchPlayers } from '../actions/Players';
+import { fetchGames }   from '../actions/Games';
 import App from '../components/App';
 
 export function mapDispatchToProps(dispatch: Dispatch<any>) {
   const updateData = () => {
-    Promise.all([dispatch(fetchPlayers()), dispatch(fetchRegions())])
+    Promise.all([
+              dispatch(fetchPlayers()),
+              dispatch(fetchRegions()),
+              dispatch(fetchGames())
+            ])
            .then(() => dispatch(fetchResults()));
   };
 

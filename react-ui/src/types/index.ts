@@ -4,6 +4,7 @@ export interface Result {
   winner: Player;
   date: Date;
   score: number;
+  game: Game;
 }
 
 export interface Region {
@@ -16,9 +17,16 @@ export interface Player {
   name: string;
 }
 
+export interface Game {
+  id: string;
+  short: string;
+  name: string;
+}
+
 export type ResultSet = {[key: string]: Result};
 export type RegionSet = {[key: string]: Region};
 export type PlayerSet = {[key: string]: Player};
+export type GameSet   = {[key: string]: Game};
 
 export interface FetchedData {
   receivedAt: number;
@@ -37,10 +45,15 @@ export interface PlayerData extends FetchedData {
   players: PlayerSet;
 }
 
+export interface GameData extends FetchedData {
+  games: GameSet;
+}
+
 export interface ReduxState {
   loggedIn: boolean;
   location: Coordinates | null;
   resultData: ResultData;
   regionData: RegionData;
   playerData: PlayerData;
+  gameData:   GameData;
 }

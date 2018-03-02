@@ -90,7 +90,8 @@ export function fetchResults() {
         regions: res.regions.map((reg: string) => getState().regionData.regions[reg] || { id: reg, name: '' }),
         winner: getState().playerData.players[res.winner] || { id: res.winner, name: '' },
         date: new Date(res.date),
-        score: res.score 
+        score: res.score,
+        game: getState().gameData.games[res.game] || { id: res.game, name: '' }
       }));
 
       dispatch(receiveResults(results));

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Result, Region, Player } from '../types';
+import { Result, Region, Player, Game } from '../types';
 
 import PlayerSelect from '../containers/PlayerSelect';
 import RegionSelect from '../containers/RegionSelect';
@@ -71,7 +71,8 @@ class Add extends React.Component<Props, State> {
       winner: this.state.winner[0],
       date: this.state.date,
       score: this.state.score,
-      location: this.props.location
+      location: this.props.location,
+      game: { id: 'settlers' } as Game
     };
 
     this.props.newGame(res);
