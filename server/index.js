@@ -111,6 +111,16 @@ var userCache = {};
 
   app.get('/api/games', read(Games));
 
+  // GraphQL support
+  const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+  const { makeExecutableSchema } = require('graphql-tools');
+  const fs = require('fs');
+  const typeDefs = fs.readFileSync('server/schema.graphql', 'utf8');
+  const resolvers = require('./resolvers');
+  const schema = makeExecutableSchema({ typeDefs, resolvers });
+  app.use('/graphql', graphqlExpress({ schema, context: { Regions, Players, Results, Games, exclude } }));
+  app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));

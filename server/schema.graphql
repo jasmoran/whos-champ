@@ -1,0 +1,70 @@
+# Result of a match
+type Result {
+  # Result ID
+  id: ID!
+  # Date of match
+  date: String!
+  # Score of match (optional)
+  score: Int
+
+  # Who won the match
+  winner: Player!
+  # The regional titles won in this match (if any)
+  regions: [Region]!
+  # The game played
+  game: Game!
+}
+
+# A regional title for a game
+type Region {
+  # Region ID
+  id: ID!
+  # Name of this region
+  name: String!
+
+  # The game this title belongs to
+  game: Game!
+  # Results where this title has been won
+  results: [Result]!
+}
+
+# Describes a game player
+type Player {
+  # Player ID
+  id: ID!
+  # Name or nickname of the player
+  name: String!
+
+  # The list of this player's winning results
+  results: [Result]!
+}
+
+# A game that can be played, such as 500 or Settlers of Catan
+type Game {
+  # Game ID
+  id: ID!
+  # Short version of the Game's name
+  short: String!
+  # Full name of Game
+  name: String!
+
+  # List of regions for this game
+  regions: [Region]!
+  # List of results for this game
+  results: [Result]!
+}
+
+
+type Query {
+  results: [Result]!
+  result(id: ID!): Result!
+
+  regions: [Region]!
+  region(id: ID!): Region!
+
+  players: [Player]!
+  player(id: ID!): Player!
+
+  games: [Game]!
+  game(id: ID!): Game!
+}
