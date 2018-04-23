@@ -4,7 +4,7 @@ import { Result, Region, Player, Game } from '../types';
 
 import PlayerSelect from '../containers/PlayerSelect';
 import RegionSelect from '../containers/RegionSelect';
-import GameSelect from '../containers/GameSelect';
+import GameSelect from './GameSelect';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
@@ -110,7 +110,6 @@ class Add extends React.Component<Props, State> {
       <form>
         <GameSelect
           label="Game"
-          value={this.state.game}
           onChange={this.gameChange}
           valid={this.state.gameValid}
         />
