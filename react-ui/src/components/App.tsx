@@ -8,7 +8,7 @@ import Auth from '../auth';
 import Add from '../containers/Add';
 import List from '../containers/List';
 import Login from '../containers/Login';
-import Leaders from '../containers/Leaders';
+import Leaders from './Leaders';
 import Loading from './Loading';
 
 import createHistory from 'history/createBrowserHistory';

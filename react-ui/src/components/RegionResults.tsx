@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
-import { Result } from '../types';
 import Trophy from './Trophy';
-import CompactList from './CompactList';
+import CompactList, { Result } from './CompactList';
 
 export interface Props {
   region: string;
