@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Result, Region, Player, Game } from '../types';
 
-import PlayerSelect from '../containers/PlayerSelect';
+import PlayerSelect from './PlayerSelect';
 import RegionSelect from '../containers/RegionSelect';
 import GameSelect from './GameSelect';
 
@@ -123,7 +123,6 @@ class Add extends React.Component<Props, State> {
 
         <PlayerSelect
           label="Winner"
-          value={this.state.winner}
           onChange={this.winnerChange}
           valid={this.state.winnerValid}
         />
