@@ -1,28 +1,46 @@
 import * as React from 'react';
-import { Result, Region } from '../types';
+import { ResultListQuery } from '../result-types';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import DateUtil from '../DateUtil';
+import { query } from '../graphql';
+import ArrayUtil from '../util/ArrayUtil';
 
-export interface Props {
-  results: Result[];
-}
+import gql from 'graphql-tag';
 
-class List extends React.Component<Props, object> {
-  render() {
-    const results = this.props.results.map((res: Result) => (
-      res.regions.map((reg: Region) => (
-        <ListGroupItem key={res.id + reg.id}>
-          {res.game.short}: {res.winner.name} won the {reg.name} title {DateUtil.describe(res.date)}
-        </ListGroupItem>
-      ))
-    ));
+const QUERY = gql`
+  query ResultList {
+    results {
+      id,
+      date,
+      winner {
+        name
+      },
+      regions {
+        name
+      },
+      game {
+        short
+      }
+    }
+  }`;
 
+const List = () => query(QUERY, (data: ResultListQuery) => {
+  const results = ArrayUtil.compact(data.results).map(res => {
+    const plural = res.regions.length > 1 ? 's' : '';
+    const date = DateUtil.describe(new Date(res.date));
+    const regions = ArrayUtil.compact(res.regions).map(r => r.name).join(', ');
     return (
-      <ListGroup>
-        {results}
-      </ListGroup>
+      <ListGroupItem key={res.id}>
+        {res.game.short}: {res.winner.name} won the {regions} title{plural} {date}
+      </ListGroupItem>
     );
-  }
-}
+  });
+
+  return (
+    <ListGroup>
+      {results}
+    </ListGroup>
+  );
+});
 
 export default List;
