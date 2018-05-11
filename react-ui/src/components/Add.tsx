@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Result, Region, Player, Game } from '../types';
 
 import PlayerSelect from './PlayerSelect';
-import RegionSelect from '../containers/RegionSelect';
+import RegionSelect from './RegionSelect';
 import GameSelect from './GameSelect';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -106,6 +106,8 @@ class Add extends React.Component<Props, State> {
       <Button onClick={this.newGame.bind(null, history)}>Add Game</Button>
     ));
 
+    const selectedGame = this.state.game[0] || {};
+
     return (
       <form>
         <GameSelect
@@ -119,6 +121,7 @@ class Add extends React.Component<Props, State> {
           value={this.state.regions}
           onChange={this.regionChange}
           valid={this.state.regionValid}
+          gameId={selectedGame.id}
         />
 
         <PlayerSelect
