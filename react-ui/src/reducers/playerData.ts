@@ -1,4 +1,4 @@
-import { RECEIVE_PLAYERS, REQUEST_PLAYERS, PlayerAction } from '../actions/Players';
+import { ADD_PLAYER, RECEIVE_PLAYERS, REQUEST_PLAYERS, PlayerAction } from '../actions/Players';
 import { PlayerData } from '../types';
 
 const playerData = (state: PlayerData = {
@@ -8,6 +8,12 @@ const playerData = (state: PlayerData = {
                     },
                     action: PlayerAction) => {
   switch (action.type) {
+    case ADD_PLAYER:
+      return {...state,
+        players: {...state.players,
+          [action.player.id]: action.player
+        }
+      };
     case REQUEST_PLAYERS:
       return {...state, updating: true};
     case RECEIVE_PLAYERS:

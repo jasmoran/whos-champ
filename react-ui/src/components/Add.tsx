@@ -16,13 +16,14 @@ import DateUtil from '../DateUtil';
 
 export interface Props {
   newGame: (res: Result) => void;
+  newPlayer: (player: Player) => void;
   location: Coordinates | null;
 }
 
 export interface State {
   id?: string;
   regions: Region[];
-  winner: Player[];
+  winner: (Player & { customOption?: true })[];
   game: Game[];
   date: Date;
   score: number;
@@ -75,15 +76,25 @@ class Add extends React.Component<Props, State> {
     if (invalid) { return; }
 
     const id = generateID();
+    const winner = this.state.winner[0];
     const res = {
       id,
       regions: this.state.regions,
-      winner: this.state.winner[0],
+      winner,
       date: this.state.date,
       score: this.state.score,
       location: this.props.location,
       game: this.state.game[0]
     };
+
+    if (winner.customOption) {
+      res.winner = {
+        id: generateID(),
+        name: winner.name,
+        location: this.props.location
+      } as Player;
+      this.props.newPlayer(res.winner);
+    }
 
     this.props.newGame(res);
     history.push('/');

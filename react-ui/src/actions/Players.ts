@@ -31,7 +31,7 @@ export function receivePlayers(json: Player[]): ReceivePlayers {
   };
 }
 
-export type PlayerAction = RequestPlayers | ReceivePlayers;
+export type PlayerAction = AddPlayer | RequestPlayers | ReceivePlayers;
 
 export function fetchPlayers() {
   return function (dispatch: (t: object) => void) {
@@ -42,5 +42,29 @@ export function fetchPlayers() {
     .then(json =>
       dispatch(receivePlayers(json))
     );
+  };
+}
+
+export const ADD_PLAYER = 'ADD_PLAYER';
+export type ADD_PLAYER = typeof ADD_PLAYER;
+
+export interface AddPlayer {
+  type: ADD_PLAYER;
+  player: Player;
+}
+
+export function addPlayer(player: Player): AddPlayer {
+  fetch(`/api/players`, {
+    method: 'POST',
+    body: JSON.stringify(player),
+    headers: {
+      'Authorization': `Bearer ${localStorage.access_token}`,
+      'Content-Type': 'application/json'
+    }
+  } as RequestInit);
+
+  return {
+    type: ADD_PLAYER,
+    player
   };
 }
