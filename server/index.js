@@ -7,6 +7,10 @@ const app = express()
 
 const mongo = require('mongodb');
 const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error('Error: $MONGODB_URI must be set');
+  process.exit();
+}
 const dbName = uri.split('/').pop();
 
 // enable the use of request body parsing middleware
