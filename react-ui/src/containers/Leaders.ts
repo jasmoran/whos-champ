@@ -26,7 +26,7 @@ export function mapStateToProps(state: ReduxState) {
                                       .map(([game, rByR]) => ({
                                         game: state.gameData.games[game],
                                         resultsByRegion: Object.entries(rByR).map(([region, results]) => ({
-                                          region: state.regionData.regions[region],
+                                          region: state.regionData.regions[region] || { id: '', name: '' },
                                           results: results.sort(compareResults)
                                         }))
                                       }));

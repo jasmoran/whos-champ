@@ -31,7 +31,7 @@ export function receiveRegions(json: Region[]): ReceiveRegions {
   };
 }
 
-export type RegionAction = RequestRegions | ReceiveRegions;
+export type RegionAction = RequestRegions | ReceiveRegions | AddRegion;
 
 export function fetchRegions() {
   return function (dispatch: (t: object) => void) {
@@ -42,5 +42,29 @@ export function fetchRegions() {
     .then(json =>
       dispatch(receiveRegions(json))
     );
+  };
+}
+
+export const ADD_REGION = 'ADD_REGION';
+export type ADD_REGION = typeof ADD_REGION;
+
+export interface AddRegion {
+  type: ADD_REGION;
+  region: Region;
+}
+
+export function addRegion(region: Region): AddRegion {
+  fetch(`/api/regions`, {
+    method: 'POST',
+    body: JSON.stringify(region),
+    headers: {
+      'Authorization': `Bearer ${localStorage.access_token}`,
+      'Content-Type': 'application/json'
+    }
+  } as RequestInit);
+
+  return {
+    type: ADD_REGION,
+    region
   };
 }

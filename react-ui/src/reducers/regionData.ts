@@ -1,4 +1,4 @@
-import { RECEIVE_REGIONS, REQUEST_REGIONS, RegionAction } from '../actions/Regions';
+import { RECEIVE_REGIONS, REQUEST_REGIONS, RegionAction, ADD_REGION } from '../actions/Regions';
 import { RegionData } from '../types';
 
 const regionData = (state: RegionData = {
@@ -8,6 +8,12 @@ const regionData = (state: RegionData = {
                     },
                     action: RegionAction) => {
   switch (action.type) {
+    case ADD_REGION:
+      return {...state,
+        regions: {...state.regions,
+          [action.region.id]: action.region
+        }
+      };
     case REQUEST_REGIONS:
       return {...state, updating: true};
     case RECEIVE_REGIONS:
