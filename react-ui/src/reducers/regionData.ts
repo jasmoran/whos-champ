@@ -1,5 +1,5 @@
 import { RECEIVE_REGIONS, REQUEST_REGIONS, RegionAction, ADD_REGION } from '../actions/Regions';
-import { RegionData } from '../types';
+import { RegionData, Region } from '../types';
 
 const regionData = (state: RegionData = {
                       regions: {},
@@ -17,7 +17,7 @@ const regionData = (state: RegionData = {
     case REQUEST_REGIONS:
       return {...state, updating: true};
     case RECEIVE_REGIONS:
-      const regions = {};
+      const regions: {[k: string]: Region} = {};
       action.regions.forEach(region => regions[region.id] = region);
       return {
         regions,

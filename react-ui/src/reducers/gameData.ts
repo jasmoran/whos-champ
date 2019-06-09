@@ -1,5 +1,5 @@
 import { RECEIVE_GAMES, REQUEST_GAMES, GameAction } from '../actions/Games';
-import { GameData } from '../types';
+import { GameData, Game } from '../types';
 
 const gameData = (state: GameData = {
                     games: {},
@@ -11,7 +11,7 @@ const gameData = (state: GameData = {
     case REQUEST_GAMES:
       return {...state, updating: true};
     case RECEIVE_GAMES:
-      const games = {};
+      const games: {[k: string]: Game} = {};
       action.games.forEach(game => games[game.id] = game);
       return {
         games,

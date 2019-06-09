@@ -13,7 +13,7 @@ export class Login extends React.Component<Props, any> {
     }
 
     return (
-      <Modal show={true} onHide={Function()} backdrop="static">
+      <Modal show={true} onHide={()=>{}} backdrop="static">
         <Modal.Header>
           <Modal.Title className="modal-title">Log In Required</Modal.Title>
         </Modal.Header>

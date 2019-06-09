@@ -13,6 +13,6 @@ const leaderboardApp = combineReducers({
   gameData,
   loggedIn,
   location
-});
+} as any);
 
 export default leaderboardApp;

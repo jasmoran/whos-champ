@@ -22,8 +22,7 @@ export interface Props {
 
 class App extends React.Component<Props> {
   auth: Auth;
-  locationInterval: number;
-  dataInterval: number;
+  locationInterval = 0;
 
   constructor(props: Props) {
     super(props);

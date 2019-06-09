@@ -1,5 +1,5 @@
 import { ADD_RESULT, RECEIVE_RESULTS, REQUEST_RESULTS, FAILED_RESULTS, ResultAction } from '../actions/Results';
-import { ResultData } from '../types';
+import { ResultData, Result } from '../types';
 
 const resultData = (state: ResultData = {
                       results: {},
@@ -17,7 +17,7 @@ const resultData = (state: ResultData = {
     case REQUEST_RESULTS:
       return {...state, updating: true};
     case RECEIVE_RESULTS:
-      const results = {};
+      const results: {[k: string]: Result} = {};
       action.results.forEach(result => results[result.id] = result);
       return {
         results,
