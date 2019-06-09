@@ -28,15 +28,57 @@ export function setLocation(location: Coordinates): SetLocation {
   };
 }
 
-export function fetchAPI(endpoint: string) {
-  return fetch(`/api/${endpoint}`, { headers: {
-    'Authorization': `Bearer ${localStorage.access_token}`,
-    'Content-Type': 'application/json'
-  }} as RequestInit)
-  .then(
-    response => response.json(),
-    error => console.error(`An error occurred fetching ${endpoint}.`, error)
-  );
+export function updateData<T>(endpoint: string, doUpdate: (data: T) => void) {
+  const dataUrl = `/api/${endpoint}`;
+  let gotNetworkData = false;
+
+  // Get data from API
+  fetch(`${dataUrl}?cacheBuster=${Date.now()}`, {
+    cache: 'no-cache',
+    headers: {
+      'Authorization': `Bearer ${localStorage.access_token}`,
+      'Content-Type': 'application/json'
+    }
+  } as RequestInit).then(async res => {
+    // Response can only be used once so we need to clone it
+    var resClone = res.clone();
+
+    try {
+      // Read the response as json
+      const data = await res.json();
+
+      // Save response in cache
+      caches.open(cacheName).then(cache => cache.put(dataUrl, resClone));
+  
+      // Perform update
+      gotNetworkData = true;
+      doUpdate(data);
+      console.log(`Updated ${endpoint} from API`);
+    } catch (e) {
+      console.error(`Failed to update ${endpoint} from API: Got ${e}`);
+    }
+  });
+
+  // Get cached data
+  const cacheName = 'whos-champ-data';
+  caches.open(cacheName).then(async cache => {
+    try {
+      const res = await cache.match(dataUrl);
+      
+      if (res) {
+        // Read the response as json
+        const data = await res.json();
+
+        // Perform update unless API returned first
+        if (!gotNetworkData) {
+          doUpdate(data);
+          console.log(`Updated ${endpoint} from cache`);
+        }
+      }
+    } catch (e) {
+      console.error(`Failed to update ${endpoint} from cache: Got ${e}`);
+    }
+  });
 }
 
 export const generateID = () => Math.random().toString(36).substr(2, 8);

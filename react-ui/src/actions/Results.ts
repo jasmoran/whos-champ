@@ -1,5 +1,5 @@
 import { Result, ReduxState } from '../types';
-import { fetchAPI } from './';
+import { updateData } from './';
 
 export const ADD_RESULT = 'ADD_RESULT';
 export type ADD_RESULT = typeof ADD_RESULT;
@@ -78,8 +78,7 @@ export function fetchResults() {
     // Mark results as fetching
     dispatch(requestResults());
 
-    return fetchAPI('results')
-    .then(json => {
+    updateData<Result[]>('results', json => {
       if (!(json instanceof Array)) {
         console.error('Received malformed results from server');
         dispatch(failedResults());

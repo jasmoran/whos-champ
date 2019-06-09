@@ -1,5 +1,5 @@
 import { Region } from '../types';
-import { fetchAPI } from './';
+import { updateData } from './';
 
 export const REQUEST_REGIONS = 'REQUEST_REGIONS';
 export type REQUEST_REGIONS = typeof REQUEST_REGIONS;
@@ -38,10 +38,7 @@ export function fetchRegions() {
     // Mark regions as fetching
     dispatch(requestRegions());
 
-    return fetchAPI('regions')
-    .then(json =>
-      dispatch(receiveRegions(json))
-    );
+    updateData<Region[]>('regions', data => dispatch(receiveRegions(data)))
   };
 }
 

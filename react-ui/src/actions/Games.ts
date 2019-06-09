@@ -1,5 +1,5 @@
 import { Game } from '../types';
-import { fetchAPI } from './';
+import { updateData } from './';
 
 export const REQUEST_GAMES = 'REQUEST_GAMES';
 export type REQUEST_GAMES = typeof REQUEST_GAMES;
@@ -38,9 +38,6 @@ export function fetchGames() {
     // Mark games as fetching
     dispatch(requestGames());
 
-    return fetchAPI('games')
-    .then(json =>
-      dispatch(receiveGames(json))
-    );
+    updateData<Game[]>('games', data => dispatch(receiveGames(data)))
   };
 }
