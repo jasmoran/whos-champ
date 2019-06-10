@@ -19,7 +19,7 @@ export default class Auth {
   }
 
   handleAuthentication = () => {
-    this.auth0.parseHash((err: Auth0Error | null, authResult: Auth0DecodedHash) => {
+    this.auth0.parseHash((err: Auth0Error | null, authResult: Auth0DecodedHash | null) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         this.setAuth(true);
